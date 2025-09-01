@@ -1,44 +1,17 @@
-import random
-import datetime
+from __future__ import annotations
 
-characters = [
-    "wizard",
-    "astronaut",
-    "pirate",
-    "robot",
-    "dragon",
-]
+"""Generate an AI-driven story using the Llama model."""
 
-settings = [
-    "in a forest",
-    "on Mars",
-    "at sea",
-    "in a castle",
-    "in a futuristic city",
-]
+import sys
 
-conflicts = [
-    "lost a treasure",
-    "fought a rival",
-    "found a mysterious map",
-    "discovered a secret portal",
-    "built a strange machine",
-]
-
-def generate_story() -> str:
-    """Create a short, random story."""
-    character = random.choice(characters)
-    setting = random.choice(settings)
-    conflict = random.choice(conflicts)
-    return f"Once upon a time, a {character} {setting} {conflict}."
+from controller import tell_story
 
 
 def main() -> None:
-    story = generate_story()
-    timestamp = datetime.datetime.now(datetime.timezone.utc).isoformat()
-    with open("stories.txt", "a", encoding="utf-8") as f:
-        f.write(f"{timestamp} - {story}\n")
-    print("Generated story saved.")
+    """Generate a story about a topic provided on the command line."""
+    topic = " ".join(sys.argv[1:]) if len(sys.argv) > 1 else "an adventure"
+    story = tell_story(topic)
+    print(story)
 
 
 if __name__ == "__main__":
