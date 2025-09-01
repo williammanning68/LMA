@@ -17,3 +17,16 @@ When the model emits that JSON, pass it to `handle_request` to perform the actio
 Running the `tell_story` action returns the generated text and also saves it to a
 file named `story_<topic>.txt` in the current working directory, with the topic
 slugified for filesystem safety.
+
+## Command-line story generation
+
+`generate_story.py` contacts an Ollama server to tell a short whimsical story.
+The script reads the server URL and model name from `OLLAMA_URL` and
+`OLLAMA_MODEL` environment variables, defaulting to a local server at
+`http://localhost:11434` and the `llama3.2` model.
+
+```bash
+python generate_story.py "space pirates"
+```
+
+The story is printed to the console.

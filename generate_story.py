@@ -1,45 +1,27 @@
-import random
-import datetime
+"""Generate a story using a remote or local Ollama server."""
 
-characters = [
-    "wizard",
-    "astronaut",
-    "pirate",
-    "robot",
-    "dragon",
-]
-
-settings = [
-    "in a forest",
-    "on Mars",
-    "at sea",
-    "in a castle",
-    "in a futuristic city",
-]
-
-conflicts = [
-    "lost a treasure",
-    "fought a rival",
-    "found a mysterious map",
-    "discovered a secret portal",
-    "built a strange machine",
-]
-
-def generate_story() -> str:
-    """Create a short, random story."""
-    character = random.choice(characters)
-    setting = random.choice(settings)
-    conflict = random.choice(conflicts)
-    return f"Once upon a time, a {character} {setting} {conflict}."
+import os
+import sys
+import requests
 
 
 def main() -> None:
-    story = generate_story()
-    timestamp = datetime.datetime.now(datetime.timezone.utc).isoformat()
-    with open("stories.txt", "a", encoding="utf-8") as f:
-        f.write(f"{timestamp} - {story}\n")
-    print("Generated story saved.")
+    """Ask Ollama for a short whimsical story about a topic."""
+    topic = " ".join(sys.argv[1:]) if len(sys.argv) > 1 else "a comet that learns to read"
+    prompt = f"Tell a short whimsical story about {topic}."
+
+    ollama_url = os.getenv("OLLAMA_URL", "http://localhost:11434")
+    payload = {
+        "model": os.getenv("OLLAMA_MODEL", "llama3.2"),
+        "prompt": prompt,
+        "stream": False,
+    }
+
+    resp = requests.post(f"{ollama_url}/api/generate", json=payload, timeout=600)
+    resp.raise_for_status()
+    print(resp.json().get("response", "").strip())
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover - CLI entry point
     main()
+
