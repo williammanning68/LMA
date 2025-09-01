@@ -12,7 +12,7 @@ def main() -> None:
 
     ollama_url = os.getenv("OLLAMA_URL", "http://localhost:11434")
     payload = {
-        "model": os.getenv("OLLAMA_MODEL", "llama3.2"),
+        "model": os.getenv("OLLAMA_MODEL", "Llama-3.2-3B"),
         "prompt": prompt,
         "stream": False,
     }

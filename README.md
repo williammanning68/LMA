@@ -23,7 +23,7 @@ slugified for filesystem safety.
 `generate_story.py` contacts an Ollama server to tell a short whimsical story.
 The script reads the server URL and model name from `OLLAMA_URL` and
 `OLLAMA_MODEL` environment variables, defaulting to a local server at
-`http://localhost:11434` and the `llama3.2` model.
+`http://localhost:11434` and the `Llama-3.2-3B` model.
 
 ```bash
 python generate_story.py "space pirates"

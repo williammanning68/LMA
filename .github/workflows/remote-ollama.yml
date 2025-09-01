@@ -12,6 +12,6 @@ jobs:
       - name: Call remote Ollama
         env:
           OLLAMA_URL: "https://cautious-space-system-r4v7wpvrgv5g2xrrq-11434.app.github.dev"
-          OLLAMA_MODEL: "llama3.2"
+          OLLAMA_MODEL: "Llama-3.2-3B"
         run: python generate_story.py
 
