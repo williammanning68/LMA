@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from typing import Any, Callable, Dict
 
 from llama import Llama
@@ -35,10 +36,21 @@ generator = Llama.build(
 
 
 def tell_story(topic: str) -> str:
-    """Ask the model to tell a story about ``topic``."""
+    """Ask the model to tell a story about ``topic`` and save it to a file."""
     dialog = [[{"role": "user", "content": f"tell me a story about {topic}"}]]
     result = generator.chat_completion(dialog)[0]
-    return result["generation"]["content"]
+    story = result["generation"]["content"]
+
+    filename = f"story_{_slugify(topic)}.txt"
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(story)
+
+    return story
+
+
+def _slugify(text: str) -> str:
+    """Return a filesystem-friendly slug of ``text``."""
+    return re.sub(r"[^a-zA-Z0-9_-]", "_", text).lower()
 
 
 ACTIONS: Dict[str, Callable[..., Any]] = {

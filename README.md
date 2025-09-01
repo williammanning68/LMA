@@ -13,3 +13,7 @@ To tell a story, reply with:
 ```
 
 When the model emits that JSON, pass it to `handle_request` to perform the action.
+
+Running the `tell_story` action returns the generated text and also saves it to a
+file named `story_<topic>.txt` in the current working directory, with the topic
+slugified for filesystem safety.
